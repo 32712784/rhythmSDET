@@ -19,5 +19,6 @@ class TestDomo:
         addmember.add_member(username,id,phone)
         titles = addmember.get_member()
         assert  username in titles
+        print("test")
 
 
