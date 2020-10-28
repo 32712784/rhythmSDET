@@ -15,8 +15,9 @@ class AddMemberPage(BaseMethod):
         :return:
         """
         # self.find("id","username").send_keys(username)
-        self.wait_for_success("username",username)
-        self.find("name", "acctid").send_keys(id)
+        self.wait_for_input_success(By.ID,"username",value=username)
+        self.wait_for_visible(By.NAME,'acctid').send_keys(id)
+        # self.find("name", "acctid").send_keys(id)
         self.find("id","memberAdd_phone").send_keys(phone)
         self.find("css",".qui_btn.ww_btn.js_btn_save").click()
         # self.driver.find_element(By.ID, "username").send_keys(username)

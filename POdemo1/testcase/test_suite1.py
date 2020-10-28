@@ -10,7 +10,7 @@ class TestDomo():
         self.main = MainPage()
 
     @pytest.mark.parametrize("username,id,phone",[["测试00008","test00008","13011111118"]])
-    def test_addmember(self):
+    def test_addmember(self,username,id,phone):
         # username = "测试00008"
         # id = "test00008"
         # phone = "13011111118"
