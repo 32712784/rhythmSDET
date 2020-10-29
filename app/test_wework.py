@@ -22,7 +22,7 @@ class TestWework:
         caps["noReset"] = "True"
         # 跳过设备初始化，加快执行速度
         caps["skipDeviceInitialization"] = "True"
-        # 中文输入
+        # 中文输入内容时，需要提前设置
         caps["unicodeKeyBoard"] = "True"
         caps["resetKeyBoard"] = "True"
         self.driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", caps)
