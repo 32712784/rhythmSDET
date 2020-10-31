@@ -17,7 +17,7 @@ class TestWework:
         caps["appPackage"] = "com.tencent.wework"
         caps["appActivity"] = ".launch.LaunchSplashActivity"
         # 此参数设置后，执行完用例不会关闭APP
-        caps["dontStopAppOnReset"] = "True"
+        caps["dontStopAppOnReset"] = True
         # 不加此参数，会需要登录
         caps["noReset"] = "True"
         # 跳过设备初始化，加快执行速度
@@ -25,6 +25,8 @@ class TestWework:
         # 中文输入内容时，需要提前设置
         caps["unicodeKeyBoard"] = "True"
         caps["resetKeyBoard"] = "True"
+        # # 设置全局idle等待时间为0
+        caps["settings[waitForIdleTimeout]"] = 0
         self.driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", caps)
         self.driver.implicitly_wait(5)
 
@@ -55,8 +57,8 @@ class TestWework:
                                  .scrollIntoView(new UiSelector()\
                                  .text("打卡").instance(0));').click()
         # self.driver.find_element(MobileBy.XPATH, "//*[@text='打卡']").click()
-        #设置idle等待时间为0
-        self.driver.update_settings({"waitForIdleTimeout":0})
+        # 设置idle等待时间为0(局部)
+        # self.driver.update_settings({"waitForIdleTimeout":0})
         # 点击外出打卡
         self.driver.find_element(MobileBy.XPATH, "//*[@text='外出打卡']").click()
         # 点击打卡
