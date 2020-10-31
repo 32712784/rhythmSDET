@@ -79,6 +79,9 @@ class BaseMethod:
                 return True
             except:
                 return False
-        WebDriverWait(self.driver,timeout,0.5).until(wait_for_next)
-        return True
+        try:
+            WebDriverWait(self.driver,timeout,0.5).until(wait_for_next)
+            return True
+        except:
+            return False
 
