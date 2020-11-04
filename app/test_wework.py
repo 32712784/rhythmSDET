@@ -7,7 +7,7 @@ from time import sleep
 from appium import webdriver
 from appium.webdriver.common.mobileby import MobileBy
 from selenium.webdriver.support.wait import WebDriverWait
-
+import pytest
 
 class TestWework:
     def setup(self):
@@ -22,6 +22,8 @@ class TestWework:
         caps["noReset"] = "True"
         # 跳过设备初始化，加快执行速度
         caps["skipDeviceInitialization"] = "True"
+        # 跳过服务安装初始化
+        caps["skipServerInstallation"] = "True"
         # 中文输入内容时，需要提前设置
         caps["unicodeKeyBoard"] = "True"
         caps["resetKeyBoard"] = "True"
@@ -33,7 +35,7 @@ class TestWework:
     def teardown(self):
         self.driver.quit()
 
-    def test_case1(self):
+    def test_daka(self):
         # 点击工作台
         self.driver.find_element(MobileBy.XPATH, "//*[@text='工作台']").click()
         # 自动滚动屏幕点击进入打卡
@@ -56,17 +58,55 @@ class TestWework:
         WebDriverWait(self.driver,10).until(lambda x : "外出打卡成功" in x.page_source)
         self.driver.back()
 
-    def test_demo(self):
-        # el1 = self.driver.find_element_by_xpath(
-        #     "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.view.ViewGroup/android.widget.RelativeLayout[3]/android.widget.TextView")
-        # el1.click()
-        # el2 = self.driver.find_element_by_xpath(
-        #     "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.FrameLayout[2]/android.widget.RelativeLayout/android.view.ViewGroup/android.support.v7.widget.RecyclerView/android.widget.RelativeLayout[10]/android.widget.LinearLayout/android.widget.RelativeLayout/android.widget.ImageView")
-        # el2.click()
-        # el3 = self.driver.find_element_by_id("com.tencent.wework:id/ghc")
-        # el3.click()
+    def test_add_contact(self):
+        name = "测试00004"
+        gender = "男"
+        phonenum = "13500000001"
+        self.driver.find_element(MobileBy.XPATH, "//*[@text='通讯录']").click()
+        # self.driver.find_element(MobileBy.XPATH, "//*[@text='添加成员']").click()
 
-        # accessibility_id就是元素的content-desc，xxxx输入content-desc的值
-        self.driver.find_element_by_accessibility_id("xxxx")
-        pass
+        self.driver.find_element(MobileBy.ANDROID_UIAUTOMATOR,
+                                 'new UiScrollable(new UiSelector()\
+                                 .scrollable(true).instance(0))\
+                                 .scrollIntoView(new UiSelector()\
+                                 .text("添加成员").instance(0));').click()
+
+        self.driver.find_element(MobileBy.XPATH, "//*[@text='手动输入添加']").click()
+        self.driver.find_element(MobileBy.XPATH,
+                                 "//*[contains(@text, '姓名')]/../*[@text='必填']").send_keys(name)
+        self.driver.find_element(MobileBy.XPATH, "//*[contains(@text, '性别')]/..//*[@text='男']").click()
+
+        if gender == "男":
+            WebDriverWait(self.driver, 10).until(lambda x: x.find_element(MobileBy.XPATH, "//*[@text='女']"))
+            self.driver.find_element(MobileBy.XPATH, "//*[@text='男']").click()
+        else:
+            self.driver.find_element(MobileBy.XPATH, "//*[@text='女']").click()
+
+        self.driver.find_element(MobileBy.XPATH,
+                                 '//*[contains(@text, "手机") and contains(@class, "TextView")]/..//android.widget.EditText').send_keys(
+            phonenum)
+        self.driver.find_element(MobileBy.XPATH, "//*[@text='保存']").click()
+        # sleep(2)
+        # print(self.driver.page_source)
+        result = self.driver.find_element(MobileBy.XPATH, "//*[@class='android.widget.Toast']").text
+        assert '添加成功' == result
+
+    @pytest.mark.parametrize("username",[("测试00005"),("测试00006"),("测试00009"),("test")])
+    def test_del_contact(self,username):
+        # username='测试00006'
+        # 点击通讯率
+        self.driver.find_element(MobileBy.XPATH, "//*[@text='通讯录']").click()
+        # 点击右上角编辑图标
+        self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/gup").click()
+        # 点击其中一个联系人
+        WebDriverWait(self.driver,5).until(lambda x: x.find_element(MobileBy.XPATH, f"//*[@text='{username}']"))
+        self.driver.find_element(MobileBy.XPATH, f"//*[@text='{username}']").click()
+        # 点击删除
+        self.driver.find_element(MobileBy.XPATH, "//*[@text='删除成员']").click()
+        # 点击确定
+        self.driver.find_element(MobileBy.XPATH, "//*[@text='确定']").click()
+
+        # 断言等待用户名消失
+        WebDriverWait(self.driver,10).until_not(lambda x : x.find_element(MobileBy.XPATH, f"//*[@text='{username}']"))
+        self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/guk").click()
 
