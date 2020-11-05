@@ -34,7 +34,7 @@ class TestContact():
 
 
     def test_del_contact(self):
-        name = "测试00003"
+        name = "测试00005"
         #通讯录页面
         goto_address = self.main.goto_main().goto_address_book()
         #搜索联系人页面
