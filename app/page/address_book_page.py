@@ -9,6 +9,7 @@ from rhythmSDET.app.page.member_invite_menu_page import MemberInviteMenuPage
 class AddressBookPage(BasePage):
     # 点击添加成员跳转到中转页面
     def goto_member_invite_menu(self):
+        # self.find_by_scroll("添加成员")
         self.find(MobileBy.XPATH, "//*[@text='添加成员']").click()
         return MemberInviteMenuPage(self.driver)
 
@@ -29,4 +30,5 @@ class AddressBookPage(BasePage):
         self.find(MobileBy.XPATH, "//*[@text='确定']").click()
         # 等待用户名消失，然后点击右上角的X
         self.wait_element_invisible(MobileBy.XPATH, f"//*[@text='{username}']")
+        self.log().info(f"删除成员【{username}】成功")
         self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/guk").click()

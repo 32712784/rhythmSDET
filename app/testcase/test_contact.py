@@ -7,18 +7,18 @@ from rhythmSDET.app.page.app import App
 class TestContact():
     def setup_class(self):
         self.app = App()
-        self.main = self.app.start()
+        self.main = self.app.start().goto_main()
 
     def teardown_class(self):
-        self.main.quit_app()
+        self.app.quit_app()
 
-    @pytest.mark.parametrize("name,sex,phone",[("测试00003","男","13800010003"),("测试00004","男","13800010004"),("测试00005","男","13800010005"),("测试00006","男","13800010006")])
+    @pytest.mark.parametrize("name,sex,phone",[("测试00009","男","13800010009"),("测试00010","男","13800010010")])
     def test_add_contact(self,name,sex,phone):
         # name="测试00003"
         # sex = "男"
         # phone = "13800010003"
         # 添加成员后，跳转到member_invite_menu页面
-        member_invite_menu = self.main.goto_main().goto_address_book().goto_member_invite_menu().goto_contact_add().add_contact_and_goto_invite_menu(
+        member_invite_menu = self.main.goto_address_book().goto_member_invite_menu().goto_contact_add().add_contact_and_goto_invite_menu(
             name, sex, phone)
         # 捕获toast
         result=member_invite_menu.get_toast()
@@ -32,11 +32,11 @@ class TestContact():
         # 重新返回到通讯录页面
         search_page.back_address_book_page()
 
-
-    def test_del_contact(self):
-        name = "测试00005"
+    @pytest.mark.parametrize("name", [("测试00009"), ("测试00010")])
+    def test_del_contact(self,name):
+        # name = "测试00006"
         #通讯录页面
-        goto_address = self.main.goto_main().goto_address_book()
+        goto_address = self.main.goto_address_book()
         #搜索联系人页面
         search_page = goto_address.goto_address_search_page()
         #进入搜索页面，搜索并得到结果

@@ -7,6 +7,7 @@ from rhythmSDET.app.page.base_page import BasePage
 
 class ContactAddPage(BasePage):
     def add_contact_and_goto_invite_menu(self,name,sex,phone):
+        self.log().info(f"添加成员：姓名【{name}】，性别：【{sex}】，电话：【{phone}】")
         # 姓名
         self.find(MobileBy.ID, "com.tencent.wework:id/au0").send_keys(name)
         # 性别选择
