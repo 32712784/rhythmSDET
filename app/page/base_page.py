@@ -26,7 +26,7 @@ class BasePage:
         # 如果存在logger.handlers列表为0，则创建handler
         if len(logger.handlers) == 0:
             # 创建handler
-            fh = logging.FileHandler("log.txt", encoding="utf-8")  # 输出日志保存到文件
+            # fh = logging.FileHandler("log.txt", encoding="utf-8")  # 输出日志保存到文件
             ch = logging.StreamHandler()  # 日志打印到窗口
 
             # 设置输出日志格式
