@@ -1,0 +1,8 @@
+goto_market_page:
+- by: id
+  locator: com.xueqiu.android:id/post_status
+  action: click
+
+- by: xpath
+  locator: //*[@text="ÐÐÇé" and @resource-id="com.xueqiu.android:id/tab_name"]
+  action: click
