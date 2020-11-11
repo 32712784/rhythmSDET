@@ -7,5 +7,6 @@ from rhythmSDET.CustomerFrame.page.search_page import SearchPage
 
 class MarketPage(BasePage):
     def goto_search_page(self):
-        self.find(MobileBy.ID, "com.xueqiu.android:id/action_search").click()
+        self.parse_yaml("./../page/market_page.yaml","goto_search_page")
+        # self.find(MobileBy.ID, "com.xueqiu.android:id/action_search").click()
         return SearchPage(self.driver)

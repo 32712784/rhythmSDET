@@ -56,15 +56,17 @@ class BasePage:
     def parse_yaml(self,path,func,value=""):
         with open(path) as f:
             datas = yaml.load(f)
-        # steps = [{'by': 'id', 'locator': 'com.xueqiu.android:id/post_status', 'action': 'click'}, {'by': 'xpath', 'locator': 'r"//*[@text=\'行情\' and @resource-id=\'com.xueqiu.android:id/tab_name\']"', 'action': 'click'}]
+        # steps = [{'by': 'id', 'locator': 'com.xueqiu.android:id/post_status', 'action': 'click'}, {'by': 'xpath', 'locator': '//*[@text="行情" and @resource-id="com.xueqiu.android:id/tab_name"]', 'action': 'click'}]
         steps = datas[func]
+        self.action(steps,value)
+
+    def action(self, steps, value=""):
         # step={'by': 'id', 'locator': 'com.xueqiu.android:id/post_status', 'action': 'click'}
+        # step={'by': 'xpath', 'locator': '//*[@text="行情" and @resource-id="com.xueqiu.android:id/tab_name"]', 'action': 'click'}
         for step in steps:
             sleep(1)
-            if step['action'] =='click':
-                self.find(step['by'],step['locator']).click()
+            if step['action'] == 'click':
+                self.find(step['by'], step['locator']).click()
             elif step['action'] == 'sendkey':
-                self.find(step['by'],step['locator']).send_keys(value)
-
-
-
+                self.find(step['by'], step['locator']).clear()
+                self.find(step['by'], step['locator']).send_keys(value)
