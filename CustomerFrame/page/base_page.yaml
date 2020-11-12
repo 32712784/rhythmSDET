@@ -1,0 +1,10 @@
+caps:
+  platformName: "Android"
+  deviceName: "Autotest"
+  appPackage: "com.xueqiu.android"
+  appActivity: ".common.MainActivity"
+  noReset: True
+  dontStopAppOnReset: True
+  unicodeKeyBoard: True
+  resetKeyBoard: True
+  skipDeviceInitialization: True

@@ -17,24 +17,27 @@ class BasePage:
     def __init__(self, driver: WebDriver = None):
         # driver为空则新建
         if driver == None:
-            caps = {}
-            caps["platformName"] = "Android"
-            caps["deviceName"] = "Autotest"
-            caps["appPackage"] = "com.xueqiu.android"
-            caps["appActivity"] = ".common.MainActivity"
-            # 此参数设置后，执行完用例不会关闭APP
-            caps["dontStopAppOnReset"] = True
-            # 不加此参数，会需要登录
-            caps["noReset"] = "True"
-            # 跳过设备初始化，加快执行速度
-            caps["skipDeviceInitialization"] = True
-            # 跳过服务安装初始化
-            caps["skipServerInstallation"] = True
-            # 中文输入内容时，需要提前设置
-            caps["unicodeKeyBoard"] = "True"
-            caps["resetKeyBoard"] = "True"
-            # 设置全局idle等待时间为0
-            caps["settings[waitForIdleTimeout]"] = 0
+            with open("./../page/base_page.yaml") as f:
+                datas = yaml.load(f)
+                caps = datas['caps']
+            # caps = {}
+            # caps["platformName"] = "Android"
+            # caps["deviceName"] = "Autotest"
+            # caps["appPackage"] = "com.xueqiu.android"
+            # caps["appActivity"] = ".common.MainActivity"
+            # # 此参数设置后，执行完用例不会关闭APP
+            # caps["dontStopAppOnReset"] = True
+            # # 不加此参数，会需要登录
+            # caps["noReset"] = "True"
+            # # 跳过设备初始化，加快执行速度
+            # caps["skipDeviceInitialization"] = True
+            # # 跳过服务安装初始化
+            # caps["skipServerInstallation"] = True
+            # # 中文输入内容时，需要提前设置
+            # caps["unicodeKeyBoard"] = "True"
+            # caps["resetKeyBoard"] = "True"
+            # # 设置全局idle等待时间为0
+            # caps["settings[waitForIdleTimeout]"] = 0
             self.driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", caps)
             self.driver.implicitly_wait(5)
         else:
