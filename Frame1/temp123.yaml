@@ -1,0 +1,9 @@
+test_xxx:
+  - hello.a: []
+  - print: ["abcde"]
+  - re.search: [".*", "xxxx"]
+  - save: [temp]
+  - print: [$(temp)]
+
+test_b:
+  - print: [4567]
