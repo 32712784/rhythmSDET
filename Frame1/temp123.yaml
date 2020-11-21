@@ -8,9 +8,9 @@ test_xxx:
   - save: [temp]
   - print: [$(temp)]
 
-#test_aaa:
-#  - hello.a: []
-#  - print: ["abcde"]
-#  - re.search: [".*", "xxxx"]
-#  - save: [temp]
-#  - print: [$(temp)]
+test1_aaa:
+  - hello.a: []
+  - print: ["abcde"]
+  - re.search: [".*", "xxxx"]
+  - save: [temp]
+  - print: [$(temp)]
