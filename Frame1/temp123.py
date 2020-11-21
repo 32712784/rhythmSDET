@@ -77,15 +77,6 @@ def mathod_handle(mathod,params):
             getattr(main, list3)()
             print(f"已执行{list2}.{list3}()方法！")
 
-def test_parse(module,fun,step):
-    # fun = [{'print': [1234]}, {'str': 'a+b+c+d'}]
-    for steps in fun:
-        for k in steps:
-            if k == step:
-                main = importlib.import_module(module)
-                getattr(main, k)(steps[k])
-
-
 def test_temp():
     # parse_yaml("./temp123.yaml","hello","test_a", "")
     # 动态导入的两种方式：
