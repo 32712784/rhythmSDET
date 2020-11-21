@@ -4,8 +4,8 @@ import yaml
 
 from rhythmSDET.Frame1 import hello
 # path,module, func,step
-def test_parse_yaml():
-    with open("./temp123.yaml") as f:
+def parse_yaml(path,globalval=None):
+    with open(path) as f:
         datas = yaml.load(f, Loader=yaml.FullLoader)
         # datas = {'test_xxx': [{'hello.a': []}, {'print': ['abcde']}, {'re.search': ['.*', 'xxxx']}, {'save': ['temp']}, {'print': ['$(temp)']}]}
         # print(datas)
@@ -20,18 +20,38 @@ def test_parse_yaml():
                         if "." in mathod:
                             mathod_handle(mathod,params)
                         elif mathod == "print":
-                            # 全局变量设置
-                            if "$" in params:
-                                pass
+                            # 如果字典的key的list[0]包含$，则是全局变量。step={'print': ['$(temp)']}，params=['$(temp)'],用params[0]获取字符串
+                            if "$" in params[0]:
+                                param = params[0]
+                                globaltem = use_global_var(param)
+                                print(f"{param}={globaltem}")
                             else:
-                                print(*params)
+                                # print(*params)
+                                print("打印："+"".join(params))
+                                pass
                             # 保存全局变量
                         elif mathod == "save":
-                            pass
+                            key = params[0]
+                            sava(key,globalval)
                         else:
                             print(f"{mathod}是未定义的方法！！")
             else:
                 print(f"{casename}不是标准用例！！")
+
+# 用于保存全局变量
+def sava(key,value):
+    globals()[key] = value
+    result = globals()[key]
+    print(f"save：【{result}】已存入全局变量{key}中")
+    return result
+
+# 使用全局变量
+def use_global_var(param):
+    key = param.replace("$(","").replace(")","")
+    # 把 string 当成 python 命令调用： a = 1 ; print(eval(“a”))
+    result = eval(key)
+    print(f"全局变量{key}的值是：{result}")
+    return result
 
 # 用于动态导入模块和方法
 def mathod_handle(mathod,params):
@@ -46,13 +66,16 @@ def mathod_handle(mathod,params):
     if len(params) != 0:
         if hasattr(main, list3):
             # 得到：getattr(main, test_b1)(1, 2)
-            getattr(main, list3)(*params)
+            a = getattr(main, list3)(*params)
+            if a is not None:
+                print(a)
             # print(getattr(main, list3)(*params))
-            print(f"{list2}.{list3}({params})")
+            print(f"已执行{list2}.{list3}({params}方法！)")
     else:
         # 动态导入，执行无参数方法
         if hasattr(main, list3):
             getattr(main, list3)()
+            print(f"已执行{list2}.{list3}()方法！")
 
 def test_parse(module,fun,step):
     # fun = [{'print': [1234]}, {'str': 'a+b+c+d'}]
@@ -74,3 +97,6 @@ def test_temp():
     if hasattr(main, "test_a1"):
         # 判断动态导入的模块hello下有a函数，则通过getattr()方法动态执行该函数，反射调用
         getattr(main, "test_b1")(3,5)
+
+def test_execute_yaml_script():
+    parse_yaml("./temp123.yaml","打印全局变量")

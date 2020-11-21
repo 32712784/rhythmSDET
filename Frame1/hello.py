@@ -7,3 +7,6 @@ def test_a1(a,b):
 def test_b1(a,b):
     s = str(a-b)
     print(f"调用函数b执行{a}-{b})={s}")
+
+def test_c1():
+    print("执行无参数方法test_c1")

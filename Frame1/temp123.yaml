@@ -1,12 +1,16 @@
 test_xxx:
   - rhythmSDET.Frame1.hello.test_a1: [1,2]
   - rhythmSDET.Frame1.hello.test_b1: [1,2]
+  - rhythmSDET.Frame1.hello.test_c1: []
   - re.split: ["2","13125982687"]
   - print: ["abcde"]
-
-atest_aaa:
-  - hello.a: []
-  - print: ["abcde"]
-  - re.search: [".*", "xxxx"]
+  - print: ["Œ“ «","list"]
   - save: [temp]
   - print: [$(temp)]
+
+#test_aaa:
+#  - hello.a: []
+#  - print: ["abcde"]
+#  - re.search: [".*", "xxxx"]
+#  - save: [temp]
+#  - print: [$(temp)]
