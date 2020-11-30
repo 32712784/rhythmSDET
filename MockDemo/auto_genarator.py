@@ -1,6 +1,28 @@
 # -*- coding: utf-8 -*-
 import json
+from mitmproxy import http
 
+rule = [0,1,2]
+
+# 统计url和访问次数
+url_index = {}
+
+def response(flow:http.HTTPFlow):
+    url = flow.request.url.split(".json")[0]
+    if url not in url_index.keys():
+        url_index[url] = 0
+    else:
+        url_index[url] += 1
+    # 根据url访问次数，取余rule，以便每次访问后，翻倍数量不一样
+    seed = url_index[url]%len(rule)
+
+    if "quote.json" in flow.request.pretty_url and "x=" in flow.request.pretty_url:
+        # 把响应body转换为字典
+        data = json.loads(flow.response.content)
+        # 翻倍数据，每次取值不一样的翻倍数量  !!!对text翻倍后，雪球页面无法显示自选列表！！！
+        data_new = json_traval(data,array=rule[seed])
+        # 翻倍后的数据，重新传给响应body
+        flow.response.text = json.dumps(data_new)
 
 def json_traval(data, array=None, text=1, num=1):
     """
@@ -29,7 +51,7 @@ def json_traval(data, array=None, text=1, num=1):
             if array is None:
                 data_new.append(item_new)
             # 如果array是整数且大于0，则翻倍数据
-            elif isinstance(array, int) and array >=0:
+            elif isinstance(array, int) and array >0:
                 for i in range(array):
                     data_new.append(item_new)
             # 为负或者不为整数，不翻倍
@@ -53,7 +75,7 @@ def json_traval(data, array=None, text=1, num=1):
 
     return data_new
 
-with open(r"D:\pythonProject\rhythmSDET\MockDemo\generator.json","r",encoding="utf8") as f:
-    data = json.load(f)
-    print(data)
-print(json_traval(data,1, 2, 2))
+# with open(r".\generator.json","r",encoding="utf8") as f:
+#     data = json.load(f)
+#     print(data)
+# print(json_traval(data,1, 2, 2))
