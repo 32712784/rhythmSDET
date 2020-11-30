@@ -1,0 +1,30 @@
+{
+  "appId": 107,
+  "versionId": 56092,
+  "tenantIds": "",
+  "customers": [
+    {
+      "customerName": "江苏富通置业",
+      "customerERP": "f5d093a7-e7a1-4d65-a3ab-8d55e8d0a266,gzlERP,",
+      "tenantId": "",
+      "tenantName": "",
+      "isLock": false,
+      "isHasCustomize": false,
+      "isApproval": false,
+      "isHavePdTask": false,
+      "labels": [
+        {
+          "id": "7ee87420-d3b8-4dd8-898d-0de47d9f3a76",
+          "name": "拓新客户",
+          "type": 1
+        }
+      ],
+      "isFeatureApproval": false,
+      "isHotfixApproval": false,
+      "checked": true,
+      "disabled": false
+    }
+  ],
+  "publishUpdatePackageId": 29074,
+  "isNeedManualExecute": false
+}
