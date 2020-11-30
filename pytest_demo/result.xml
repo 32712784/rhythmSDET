@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="1" hostname="wh-wangh07" name="pytest" skipped="0" tests="16" time="0.234" timestamp="2020-10-27T16:50:36.653709"><testcase classname="test_mark.TestMark" name="test_login" time="0.003" /><testcase classname="test_mark.TestMark" name="test_login2" time="0.002" /><testcase classname="test_mark.TestMark" name="test_search" time="0.002" /><testcase classname="test_mark.TestMark" name="test_search1" time="0.001" /><testcase classname="test_pytest_demo1.Testdemo1" name="test1" time="0.002" /><testcase classname="test_pytest_demo1.Testdemo1" name="test2" time="0.081" /><testcase classname="test_pytest_demo3.TestCalc" name="test_add[int_case]" time="0.004" /><testcase classname="test_pytest_demo3.TestCalc" name="test_add[bignum_case]" time="0.003" /><testcase classname="test_pytest_demo3.TestCalc" name="test_add_float[0.01-0.02-0.03]" time="0.010" /><testcase classname="test_pytest_demo3.TestCalc" name="test_add_float[0.1-0.2-0.4]" time="0.003"><failure message="assert 0.3 == 0.4&#10; +  where 0.3 = round(0.30000000000000004, 2)">self = &lt;pytest_demo.test_pytest_demo3.TestCalc object at 0x0000000003453D48&gt;, a = 0.1, b = 0.2, expect = 0.4
+
+    @pytest.mark.parametrize('a,b,expect', [[0.01, 0.02, 0.03], [0.1, 0.2, 0.4]])
+    def test_add_float(self, a, b, expect):
+        result = self.calc.add(a, b)
+&gt;       assert round(result, 2) == expect
+E       assert 0.3 == 0.4
+E        +  where 0.3 = round(0.30000000000000004, 2)
+
+test_pytest_demo3.py:25: AssertionError</failure></testcase><testcase classname="test_pytest_demo3.TestCalc" name="test_sub" time="0.001" /><testcase classname="test_pytest_demo3.TestCalc" name="test_mul" time="0.001" /><testcase classname="test_pytest_demo3.TestCalc" name="test_div_zero[1-0-True]" time="0.002" /><testcase classname="test_pytest_demo3.TestCalc" name="test_div_zero[0.1-0-True]" time="0.002" /><testcase classname="test_pytest_demo3.TestCalc" name="test_div[10-2-5]" time="0.002" /><testcase classname="test_pytest_demo3.TestCalc" name="test_div[100-0.2-500]" time="0.002" /></testsuite></testsuites>
