@@ -1,4 +1,6 @@
 # coding=utf-8
+import json
+
 import requests
 import pytest
 
@@ -46,6 +48,9 @@ def test_get_list():
     r = requests.get(url, params=params)
     resp_json = r.json()
     tag = None
+    # print(type(resp_json))
+    # print(type(json.dumps(resp_json, indent=2)))
+    # print(json.dumps(resp_json))
     for tag_group in resp_json["tag_group"]:
         if tag_group["group_name"] == "python15":
             tag = tag_group["tag"]
